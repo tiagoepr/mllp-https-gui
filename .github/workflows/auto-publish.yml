@@ -38,7 +38,6 @@ jobs:
         skip_existing: true
         password: ${{ secrets.PYPI_API_TOKEN_TEST }}
         repository_url: https://test.pypi.org/legacy/
-
     - name: Create GitHub Release
       id: create_release
       uses: actions/create-release@v1
