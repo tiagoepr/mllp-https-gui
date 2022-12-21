@@ -48,10 +48,12 @@ class FirstWindow:
             icon='./doc/icon.ico',
         ).layout(layout)
 
+
+
+    def open(self):
         # Get values from window
         self.button, self.values = self.firstwindow.Read()
 
-    def open(self):
         # print(self.button, self.values)
         if self.button == "MLLP 2 HTTPS":
             print("MLLP2HTTPS choosen")
