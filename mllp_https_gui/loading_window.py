@@ -1,7 +1,7 @@
 ### Added feature: HTTPS to MLLP
 ### By Tiago Rodrigues
 ### Sectra Iberia, Dec 2022
-
+import subprocess
 import threading
 import os
 from time import sleep
@@ -54,8 +54,6 @@ class LoadingWindow:
         # Get values from window
         # self.button, self.values = self.window.Read()
 
-
-
     def open(self):
         # Open loading window
         button, values = self.window.Read(timeout=0)
@@ -67,14 +65,15 @@ class LoadingWindow:
         # Make sure that Pip is installed:
         try:
             # os.system('py -m pip --version')
-            os.system('py -m pip install --upgrade pip')
+            subprocess.run(['py -m pip install --upgrade pip'], check=True)
 
             # Install mllp-https
-            os.system('py -m pip install mllp-https')
-        except:
-            print('Could not update pip and mllp-https modules.')
+            subprocess.run(['py -m pip install mllp-https --upgrade'], check=True)
+        except subprocess.CalledProcessError as e:
+            print('Error: ', e)
+        else:
+            print('Could not upgrade pip and mllp-https modules.')
+
 
         sleep(1)
         self.window.close()
-
-
