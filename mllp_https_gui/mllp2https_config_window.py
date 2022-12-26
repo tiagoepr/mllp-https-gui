@@ -185,7 +185,7 @@ class MLLPHTTPSConfigWindow:
             self.event, self.values = self.window.Read()
             if self.event in (sg.WIN_CLOSED, 'Exit'):
                 break
-            if self.values['-NSSM-folder-'] is not None:
+            if self.values['-NSSM-folder-'] is not None and self.values['-NSSM-folder-'] != '':
                 self.checkservice()
             if self.event == '-LOG_FOLDER-':
                 # print(self.event)
