@@ -9,5 +9,5 @@ GUI for the [Project](https://github.com/tiagoepr/mllp-https/) mllp-https, by: T
 
 
 <p align="center">
-  <img src="https://github.com/tiagoepr/mllp-https/raw/master/doc/logo.png">
+  <img src="https://github.com/tiagoepr/mllp-https/raw/master/../doc/logo.png">
 </p>
