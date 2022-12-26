@@ -65,15 +65,13 @@ class LoadingWindow:
         # Make sure that Pip is installed:
         try:
             # os.system('py -m pip --version')
-            subprocess.run(['py -m pip install --upgrade pip'], check=True)
+            subprocess.call('py -m pip install --upgrade pip')
 
             # Install mllp-https
-            subprocess.run(['py -m pip install mllp-https --upgrade'], check=True)
+            subprocess.call('py -m pip install mllp-https --upgrade')
         except subprocess.CalledProcessError as e:
-            print('Error: ', e)
-        else:
             print('Could not upgrade pip and mllp-https modules.')
-
+            print('Error: ', e)
 
         sleep(1)
         self.window.close()
