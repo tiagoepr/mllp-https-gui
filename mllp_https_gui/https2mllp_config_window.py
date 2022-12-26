@@ -293,7 +293,7 @@ class HTTPSMLLPConfigWindow:
         subprocess.call(cmd, shell=True)
 
         # Edit Service Parameters
-        cmd_name = '"' + path_to_nssm + '\\nssm.exe" set SECTRA_HTTPS_MLLP DisplayName "SECTRA - MLLP2HTTPS"'
+        cmd_name = '"' + path_to_nssm + '\\nssm.exe" set SECTRA_HTTPS_MLLP DisplayName "SECTRA - HTTPS2MLLP"'
         subprocess.call(cmd_name)
 
         if self.values['use_winservice_user']:
