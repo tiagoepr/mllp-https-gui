@@ -15,7 +15,7 @@ class LoadingWindow:
         # Layout
 
         layout_header = [
-            [sg.Image('../doc/logo.png')],
+            [sg.Image(os.path.abspath('./doc/logo.png'))],
             [sg.Text('Tiago Rodrigues (Tiago.Rodrigues@sectra.com)\nSECTRA - CO Iberia', justification='c')],
         ]
 
@@ -24,7 +24,7 @@ class LoadingWindow:
         ]
 
         layout_footer = [
-            [sg.Image('../doc/sectra.png')],
+            [sg.Image(os.path.abspath('./doc/sectra.png'))],
         ]
 
         layout = [
@@ -48,7 +48,7 @@ class LoadingWindow:
         self.window = sg.Window(
             'Choose Program',
             element_justification='c',
-            icon='../doc/icon.ico',
+            icon=os.path.abspath('./doc/icon.ico'),
         ).layout(layout)
 
         # Get values from window
