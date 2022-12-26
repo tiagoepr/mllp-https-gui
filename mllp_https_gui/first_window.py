@@ -11,7 +11,7 @@ class FirstWindow:
         # Layout
 
         layout_header = [
-            [sg.Image('mllp_https_gui/doc/logo.png')],
+            [sg.Image('doc/logo.png')],
             [sg.Text('Tiago Rodrigues (Tiago.Rodrigues@sectra.com)\nSECTRA - CO Iberia', justification='c')],
         ]
 
@@ -21,7 +21,7 @@ class FirstWindow:
         ]
 
         layout_footer = [
-            [sg.Image('mllp_https_gui/doc/sectra.png')],
+            [sg.Image('doc/sectra.png')],
         ]
 
         layout = [
@@ -45,7 +45,7 @@ class FirstWindow:
         self.firstwindow = sg.Window(
             'Choose Program',
             element_justification='c',
-            icon='mllp_https_gui/doc/icon.ico',
+            icon='doc/icon.ico',
         ).layout(layout)
 
 

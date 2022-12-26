@@ -50,5 +50,5 @@ def gui():
 loading_window = LoadingWindow()
 loading_window.open()
 
-# gui()
+gui()
 #sys.stdout.close()
