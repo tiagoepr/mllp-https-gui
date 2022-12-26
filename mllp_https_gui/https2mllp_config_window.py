@@ -68,14 +68,14 @@ class HTTPSMLLPConfigWindow:
                                default_text='8000', )
                            ],
                           [sg.Text('Path to Server SSL/TLS certificate:', key='cert', text_color='orange red'),
-                           sg.In(enable_events=True, key='-CERTIFICATE-'),
+                           sg.In(enable_events=True, key='-CERTIFICATE-', disabled=True),
                            sg.FileBrowse(
                                initial_folder='C:\\mllp-https\\',
                                key='--certfile',
                                file_types=(('CRT Files', '*.crt'),))
                            ],
                           [sg.Text('Path to Server SSL/TLS Private Key:', key='key', text_color='orange red'),
-                           sg.In(enable_events=True, key='-KEYFILE-'),
+                           sg.In(enable_events=True, key='-KEYFILE-', disabled=True),
                            sg.FileBrowse(
                                initial_folder='C:\\mllp-https\\',
                                key='--keyfile',
@@ -119,7 +119,7 @@ class HTTPSMLLPConfigWindow:
                           [
                               sg.Checkbox('Log to folder ->', default=False, key='log_to_folder'),
                               sg.Text('Path to folder (Cannot have spaces):'),
-                              sg.In(enable_events=True, key='-LOG_FOLDER-'),
+                              sg.In(enable_events=True, key='-LOG_FOLDER-', disabled=True),
                               sg.FolderBrowse(
                                   initial_folder='C:\\',
                                   key='--log-folder', )
@@ -139,7 +139,7 @@ class HTTPSMLLPConfigWindow:
                           [sg.Text('Path to NSSM.exe folder:',
                                    text_color='orange red',
                                    key='-NSSM_TEXT-',),
-                           sg.In(enable_events=True, key='-NSSM_FOLDER-'),
+                           sg.In(enable_events=True, key='-NSSM_FOLDER-', disabled=True),
                            sg.FolderBrowse(
                                initial_folder='.\\doc',
                                key='-NSSM-folder-', )

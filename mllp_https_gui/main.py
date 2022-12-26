@@ -2,6 +2,9 @@
 ### By Tiago Rodrigues
 ### Sectra Iberia, Dec 2022
 import argparse
+import os
+import sysconfig
+
 from mllp_https_gui.gui import Gui
 from mllp_https_gui.loading_window import LoadingWindow
 

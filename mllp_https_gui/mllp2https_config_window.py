@@ -44,7 +44,7 @@ class MLLPHTTPSConfigWindow:
                               # Missing: Validate if user provides path
                           ],
                           [sg.Text('Path to CA_BUNDLE file or directory with certificates of trusted CAs:'),
-                           sg.In(enable_events=True, key='-CA_FOLDER-'),
+                           sg.In(enable_events=True, key='-CA_FOLDER-', disabled=True),
                            sg.FolderBrowse(
                                initial_folder='C:\\mllp-https\\log',
                                key='-verifyCA-', )  # Missing: If a path to CAs is given, ignore checkbox
@@ -93,7 +93,7 @@ class MLLPHTTPSConfigWindow:
                           [
                               sg.Checkbox('Log to folder ->', default=False, key='log_to_folder'),
                               sg.Text('Path to folder (Cannot have spaces):'),
-                              sg.In(enable_events=True, key='-LOG_FOLDER-'),
+                              sg.In(enable_events=True, key='-LOG_FOLDER-', disabled=True),
                               sg.FolderBrowse(
                                   initial_folder='C:\\',
                                   key='--log-folder', )
@@ -119,7 +119,7 @@ class MLLPHTTPSConfigWindow:
                           [sg.Text('Path to NSSM.exe folder:',
                                    text_color='orange red',
                                    key='-NSSM_TEXT-',),
-                           sg.In(enable_events=True, key='-NSSM_FOLDER-'),
+                           sg.In(enable_events=True, key='-NSSM_FOLDER-', disabled=True),
                            sg.FolderBrowse(
                                initial_folder='.\\doc',
                                key='-NSSM-folder-', )
