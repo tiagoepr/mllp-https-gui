@@ -172,7 +172,7 @@ class HTTPSMLLPConfigWindow:
         ]
 
         layout_footer = [
-            [sg.Stretch(), sg.Image(os.path.abspath('./doc/logo_mllp2https.png')), sg.Stretch(), sg.Image(os.path.abspath('./doc/sectra.png'))],
+            [sg.Stretch(), sg.Image(os.path.abspath('../lib/site-packages/mllp_https_gui/doc/logo_mllp2https.png')), sg.Stretch(), sg.Image(os.path.abspath('../lib/site-packages/mllp_https_gui/doc/sectra.png'))],
         ]
 
         layout = [
@@ -196,7 +196,7 @@ class HTTPSMLLPConfigWindow:
         self.window = sg.Window(
             'HTTPS 2 MLLP Config',
             element_justification='c',
-            icon=os.path.abspath('./doc/icon.ico'),
+            icon=os.path.abspath('../lib/site-packages/mllp_https_gui/doc/icon.ico'),
         ).layout(layout)
 
     def open(self):
