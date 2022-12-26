@@ -281,7 +281,7 @@ class MLLPHTTPSConfigWindow:
             winpass = self.values['-win-password-']
             if winuser != '' and winpass != '':
                 subprocess.call('"' + path_to_nssm + '/nssm.exe" set SECTRA_MLLP_HTTPS ObjectName ' +
-                                winuser + '' + winpass)
+                                winuser + ' ' + winpass)
 
         subprocess.call('"' + path_to_nssm + '\\nssm.exe" set SECTRA_MLLP_HTTPS Start "SERVICE_AUTO_START"')
         # print('"' + path_to_nssm + '\\nssm.exe" set SECTRA_MLLP_HTTPS Start "SERVICE_AUTO_START"')
