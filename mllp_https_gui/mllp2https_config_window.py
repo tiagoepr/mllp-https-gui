@@ -151,7 +151,7 @@ class MLLPHTTPSConfigWindow:
         ]
 
         layout_footer = [
-            [sg.Stretch(), sg.Image(os.path.abspath('../lib/site-packages/mllp_https_gui/doc/logo_mllp2https.png')), sg.Stretch()],
+            [sg.Stretch(), sg.Image(os.path.abspath('../lib/site-packages/mllp_https_gui/doc/logo_mllp2https.png'))],
         ]
 
         layout = [
