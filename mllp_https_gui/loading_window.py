@@ -23,9 +23,7 @@ class LoadingWindow:
             [sg.Text('Loading...')],
         ]
 
-        layout_footer = [
-            [sg.Image(os.path.abspath('../lib/site-packages/mllp_https_gui/doc/sectra.png'))],
-        ]
+        layout_footer = []
 
         layout = [
             [sg.Column(layout_header,

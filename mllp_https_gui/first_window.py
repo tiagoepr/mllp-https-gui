@@ -13,7 +13,7 @@ class FirstWindow:
 
         layout_header = [
             [sg.Image(os.path.abspath('../lib/site-packages/mllp_https_gui/doc/logo.png'))],
-            [sg.Text('Tiago Rodrigues (Tiago.Rodrigues@sectra.com)\nSECTRA - CO Iberia', justification='c')],
+            [sg.Text('Tiago Rodrigues (Tiago.Rodrigues@sectra.com)', justification='c')],
         ]
 
         layout_body = [
@@ -22,7 +22,7 @@ class FirstWindow:
         ]
 
         layout_footer = [
-            [sg.Image(os.path.abspath('../lib/site-packages/mllp_https_gui/doc/sectra.png'))],
+            [],
         ]
 
         layout = [
