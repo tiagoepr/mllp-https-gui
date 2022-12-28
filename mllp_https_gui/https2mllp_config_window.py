@@ -191,19 +191,19 @@ class HTTPSMLLPConfigWindow:
              ],
             [sg.VSeparator(pad=(0, 15))],
             [
+                sg.Stretch(),
                 sg.Button('Create Windows Service',
                           key='-CreateWinService-',
                           disabled=True),
                 sg.Button('Delete Windows Service',
                           key='-DeleteWinService-',
                           disabled=True),
+                sg.Stretch(), sg.Image(os.path.abspath('../lib/site-packages/mllp_https_gui/doc/logo_mllp2https.png'))
             ],
 
         ]
 
-        layout_footer = [
-            [sg.Stretch(), sg.Image(os.path.abspath('../lib/site-packages/mllp_https_gui/doc/logo_mllp2https.png'))],
-        ]
+        layout_footer = []
 
         layout = [
             [sg.Column(layout_header,
