@@ -53,64 +53,67 @@ class MLLPHTTPSConfigWindow:
              ],
             [sg.Frame('MLLP Listenner Configurations',
                       [
-                          [sg.Text('MLLP IPv4 host:'),
-                           sg.InputText(
-                               key='--host',
-                               default_text='0.0.0.0')
-                           ],
-                          [sg.Text('MLLP Port:'),
-                           sg.InputText(
-                               key='--port',
-                               default_text='2575')
-                           ],
-                          [sg.Text('MLLP release version:'),
-                           sg.InputText(
-                               key='--mllp-release',
-                               default_text='1')
-                           ],
+                          [
+                              sg.Column([
+                                  [sg.Text('MLLP IPv4 host:'),
+                                   sg.InputText(
+                                       key='--host',
+                                       default_text='0.0.0.0'),
+                                   ],
+                                  [sg.Text('MLLP Port:'),
+                                   sg.InputText(
+                                       key='--port',
+                                       default_text='2575')
+                                   ],
+                              ]),
+                              sg.VSeparator(pad=(20, 10)),
+                              sg.Text('MLLP release version: 1'),
+                              # sg.InputText(
+                              #     key='--mllp-release',
+                              #     default_text='1'),
+                          ]
                       ], expand_x=True, )
              ],
             [sg.Frame('HTTPS User authentication (Optional)',
                       [
                           [
-                              sg.Checkbox('User Authentication', default=False, key='user_authentication')
+                              sg.Checkbox('User Authentication', default=False, key='user_authentication'),
                               # Missing: Validate if user provides username and password
+                              sg.Stretch(),
+                              sg.VSeparator(pad=(20, 10)),
+                              sg.Stretch(),
+                              sg.Column([
+                                  [sg.Text('Username:'),
+                                   sg.InputText(
+                                       key='--username', )
+                                   ],
+                                  [sg.Text('Password:'),
+                                   sg.InputText(
+                                       key='--password',
+                                       password_char='*',
+                                   )]
+                                  ], element_justification='right', expand_x=True, )
                           ],
-                          [sg.Text('Username:'),
-                           sg.InputText(
-                               key='--username', )
-                           ],
-                          [sg.Text('Password:'),
-                           sg.InputText(
-                               key='--password',
-                               password_char='*',
-                           )
-                           ]
                       ], expand_x=True, )
              ],
             [sg.Frame('Logging to File (Optional)',
                       [
                           [
-                              sg.Checkbox('Log to folder ->', default=False, key='log_to_folder'),
-                              sg.Text('Path to folder (Cannot have spaces):'),
-                              sg.In(enable_events=True, key='-LOG_FOLDER-', disabled=True),
-                              sg.FolderBrowse(
-                                  initial_folder='C:\\',
-                                  key='--log-folder', )
-                              # Missing: Validate if user provides path
+                              sg.Checkbox('Log to folder', default=False, key='log_to_folder'),
+                              sg.VSeparator(pad=(20, 0)),
+                              sg.Text('Log Level: '),
+                              sg.Combo(
+                                  values=['info', 'warn', 'error'],
+                                  default_value='info',
+                                  key='--log-level',
+                              ),
                           ],
-                          # [sg.Text('Path to folder:'),
-                          #  sg.In(enable_events=True, key='-LOG_FOLDER-'),
-                          #  sg.FolderBrowse(
-                          #      initial_folder='C:\\mllp-https\\log',
-                          #      key='--log-folder', )
-                          #  ],
-                          [sg.Text('Log level:'),
-                           sg.Combo(
-                               values=['info', 'warn', 'error'],
-                               default_value='info',
-                               key='--log-level',
-                           )
+                          [sg.Text('Path to folder (Cannot have spaces):'),
+                           sg.In(enable_events=True, key='-LOG_FOLDER-', disabled=True),
+                           sg.FolderBrowse(
+                               initial_folder='C:\\',
+                               key='--log-folder', )
+                           # Missing: Validate if user provides path
                            ]
                       ], expand_x=True, )
              ],
@@ -118,25 +121,31 @@ class MLLPHTTPSConfigWindow:
                       [
                           [sg.Text('Path to NSSM.exe folder:',
                                    text_color='orange red',
-                                   key='-NSSM_TEXT-',),
+                                   key='-NSSM_TEXT-', ),
                            sg.In(enable_events=True, key='-NSSM_FOLDER-', disabled=True),
                            sg.FolderBrowse(
                                initial_folder='.\\doc',
                                key='-NSSM-folder-', )
                            ],
                           [
-                              sg.Checkbox('Define Windows Admin User', default=False, key='use_winservice_user')
+                              sg.Checkbox('Define Windows Admin User', default=False, key='use_winservice_user'),
+                              sg.Stretch(),
+                              sg.VSeparator(pad=(0, 5)),
+                              sg.Stretch(),
+                              sg.Column([
+                                  [sg.Text('Windows Username:'),
+                                   sg.InputText(
+                                       key='-win_user-', default_text='Domain\\Username'),
+                                   ],
+                                  [sg.Text('Password:'),
+                                   sg.InputText(
+                                       key='-win-password-',
+                                       password_char='*',
+                                   )
+                                   ],
+                              ], element_justification='right', expand_x=True, ),
                           ],
-                          [sg.Text('Windows Username (Username@Domain):'),
-                           sg.InputText(
-                               key='-win_user-', )
-                           ],
-                          [sg.Text('Password:'),
-                           sg.InputText(
-                               key='-win-password-',
-                               password_char='*',
-                           )
-                           ],
+
                       ], expand_x=True, )
              ],
             [sg.VSeparator(pad=(0, 15))],
@@ -186,7 +195,10 @@ class MLLPHTTPSConfigWindow:
             if self.event in (sg.WIN_CLOSED, 'Exit'):
                 break
             if self.values['-NSSM-folder-'] is not None and self.values['-NSSM-folder-'] != '':
-                self.checkservice()
+                if os.path.exists(str(self.values['-NSSM-folder-']) + '\\nssm.exe'):
+                    self.checkservice()
+                else:
+                    self.window['-NSSM_FOLDER-'].update('nssm.exe not present in path')
             if self.event == '-LOG_FOLDER-':
                 # print(self.event)
                 self.folder = self.values['-LOG_FOLDER-']
@@ -194,7 +206,7 @@ class MLLPHTTPSConfigWindow:
                 # print(self.event)
                 self.CA_folder = self.values['-CA_FOLDER-']
             if self.event == '-CreateWinService-':
-                #print("Configuration values", self.values)
+                # print("Configuration values", self.values)
 
                 # Validate the arguments
                 if not self.values['user_authentication']:
@@ -227,14 +239,13 @@ class MLLPHTTPSConfigWindow:
         # subprocess.call()
         try:
             output = subprocess.check_output(cmd, stderr=subprocess.STDOUT, shell=True).decode()
-            #print(output)
+            # print(output)
             self.window['-CreateWinService-'].update(disabled=True)
             self.window['-DeleteWinService-'].update(disabled=False)
         except subprocess.CalledProcessError as e:
             self.window['-CreateWinService-'].update(disabled=False)
             self.window['-DeleteWinService-'].update(disabled=True)
-            #print(e)
-
+            # print(e)
 
     def winservice(self):
 

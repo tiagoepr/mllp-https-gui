@@ -22,51 +22,80 @@ class HTTPSMLLPConfigWindow:
 
         layout_configurations = [
             [sg.Frame('MLLP Client Configurations',
-                       [
-                           [sg.Text('MLLP Host:'),
-                            sg.InputText(
-                                key='mllp_url',
-                                default_text='localhost'),
-                            sg.VSeparator(pad=(20, 0)),
-                            sg.Checkbox('MLLP Parser to Simple Text',
-                                         default=True,
-                                         key='--mllp_parser'),
-                            ],
-                           [sg.Text('MLLP Port:'),
-                            sg.InputText(
-                                key='--mllp_port ',
-                                default_text='2575')
-                            ],
-
-                           [sg.Text('MLLP keep-alive (milliseconds) (-1 for unlimited):'),
-                            sg.InputText(
-                                key='--mllp-keep-alive',
-                                default_text='10000')
-                            ],
-                           [sg.Text('Maximum number of messages per connection (-1 for unlimited):'),
-                            sg.InputText(
-                                key='--mllp-max-messages',
-                                default_text='-1')
-                            ],
-                           [sg.Text('MLLP release version:'),
-                            sg.InputText(
-                                key='--mllp-release',
-                                default_text='1')
-                            ],
-                       ], expand_x=True, )
-              ],
+                      [
+                          [
+                              sg.Column([
+                                  [sg.Text('MLLP Host:'),
+                                   sg.InputText(
+                                       key='mllp_url',
+                                       default_text='localhost'),
+                                   ],
+                                  [sg.Text('MLLP Port:'),
+                                   sg.InputText(
+                                       key='--mllp_port',
+                                       default_text='2575')
+                                   ],
+                              ]),
+                              sg.VSeparator(pad=(20, 10)),
+                              sg.Column([
+                                  [sg.Checkbox('MLLP Parser to Simple Text',
+                                               default=True,
+                                               key='--mllp_parser'),
+                                   ],
+                                  [sg.Text('MLLP release version: 1'),
+                                   # sg.InputText(
+                                   #     key='--mllp-release',
+                                   #     default_text='1')
+                                   ],
+                              ]),
+                          ],
+                          [sg.Text('MLLP keep-alive (milliseconds) (-1 for unlimited):'),
+                           sg.InputText(
+                               key='--mllp-keep-alive',
+                               default_text='10000')
+                           ],
+                          [sg.Text('Maximum number of messages per connection (-1 for unlimited):'),
+                           sg.InputText(
+                               key='--mllp-max-messages',
+                               default_text='-1')
+                           ],
+                      ], expand_x=True, )
+             ],
             [sg.Frame('HTTPS Server Configurations',
                       [
-                          [sg.Text('HTTPS IPv4 Host:'),
-                           sg.InputText(
-                               key='--host',
-                               default_text='0.0.0.0', )
-                           ],
-                          [sg.Text('HTTPS Port:'),
-                           sg.InputText(
-                               key='--port',
-                               default_text='8000', )
-                           ],
+                          [
+                              sg.Column([
+                                  [sg.Text('HTTPS IPv4 Host:'),
+                                   sg.InputText(
+                                       key='--host',
+                                       default_text='0.0.0.0',
+                                       size=(20, 0))
+                                   ],
+                                  [sg.Text('HTTPS Port:'),
+                                   sg.InputText(
+                                       key='--port',
+                                       default_text='8000',
+                                       size=(20, 0))
+                                   ],
+                              ]),
+                              sg.VSeparator(pad=(20, 10)),
+                              sg.Column([
+                                  [sg.Text('Session Timeout (Milliseconds):'),
+                                   sg.InputText(
+                                       key='--timeout',
+                                       default_text='0',
+                                       size=(20, 0)),
+                                   ],
+                                  [sg.Text('Session Keep-Alive time (Milliseconds):'),
+                                   sg.InputText(
+                                       key='--keep-alive',
+                                       default_text='0',
+                                       size=(20, 0))
+                                   ],
+                              ])
+
+                          ],
+
                           [sg.Text('Path to Server SSL/TLS certificate:', key='cert', text_color='orange red'),
                            sg.In(enable_events=True, key='-CERTIFICATE-', disabled=True),
                            sg.FileBrowse(
@@ -79,58 +108,53 @@ class HTTPSMLLPConfigWindow:
                            sg.FileBrowse(
                                initial_folder='C:\\mllp-https\\',
                                key='--keyfile',
-                               file_types=(('Private Key files', '*.key'), ))
+                               file_types=(('Private Key files', '*.key'),))
                            ],
                           [sg.Text('HTTPS Content-Type header:'),
                            sg.Text('application/hl7-v2; charset=utf-8')
                            ],
-                          [sg.Text('Session Timeout (Milliseconds):'),
-                           sg.InputText(
-                               key='--timeout',
-                               default_text='0',),
-                           ],
-                           [sg.Text('Session Keep-Alive time (Milliseconds):'),
-                           sg.InputText(
-                               key='--keep-alive',
-                               default_text='0')
-                           ],
-
                       ], expand_x=True, )
              ],
             [sg.Frame('HTTPS Server authentication (Optional)',
                       [
                           [
-                              sg.Checkbox('Server Authentication', default=False, key='user_authentication')
+                              sg.Checkbox('Server Authentication', default=False, key='user_authentication'),
+                              sg.Stretch(),
+                              sg.VSeparator(pad=(0, 5)),
+                              sg.Stretch(),
+                              sg.Column([
+                                  [sg.Text('Username:'),
+                                   sg.InputText(
+                                       key='--username', )
+                                   ],
+                                  [sg.Text('Password:'),
+                                   sg.InputText(
+                                       key='--password',
+                                       password_char='*',
+                                   )
+                                   ]
+                              ], element_justification='right', expand_x=True, ),
                           ],
-                          [sg.Text('Username:'),
-                           sg.InputText(
-                               key='--username', )
-                           ],
-                          [sg.Text('Password:'),
-                           sg.InputText(
-                               key='--password',
-                               password_char='*',
-                           )
-                           ]
                       ], expand_x=True, )
              ],
             [sg.Frame('Logging to File (Optional)',
                       [
                           [
-                              sg.Checkbox('Log to folder ->', default=False, key='log_to_folder'),
-                              sg.Text('Path to folder (Cannot have spaces):'),
+                              sg.Checkbox('Log to folder', default=False, key='log_to_folder'),
+                              sg.VSeparator(pad=(20, 0)),
+                              sg.Text('Log Level: '),
+                              sg.Combo(
+                                  values=['info', 'warn', 'error'],
+                                  default_value='info',
+                                  key='--log-level',
+                              ),
+                          ],
+                          [sg.Text('Path to folder (Cannot have spaces):'),
                               sg.In(enable_events=True, key='-LOG_FOLDER-', disabled=True),
                               sg.FolderBrowse(
                                   initial_folder='C:\\',
                                   key='--log-folder', )
                               # Missing: Validate if user provides path
-                          ],
-                          [sg.Text('Log level:'),
-                           sg.Combo(
-                               values=['info', 'warn', 'error'],
-                               default_value='info',
-                               key='--log-level',
-                           )
                            ]
                       ], expand_x=True, )
              ],
@@ -138,25 +162,31 @@ class HTTPSMLLPConfigWindow:
                       [
                           [sg.Text('Path to NSSM.exe folder:',
                                    text_color='orange red',
-                                   key='-NSSM_TEXT-',),
+                                   key='-NSSM_TEXT-', ),
                            sg.In(enable_events=True, key='-NSSM_FOLDER-', disabled=True),
                            sg.FolderBrowse(
                                initial_folder='.\\doc',
                                key='-NSSM-folder-', )
                            ],
                           [
-                              sg.Checkbox('Define Windows Admin User', default=False, key='use_winservice_user')
+                              sg.Checkbox('Define Windows Admin User', default=False, key='use_winservice_user'),
+                              sg.Stretch(),
+                              sg.VSeparator(pad=(0, 5)),
+                              sg.Stretch(),
+                              sg.Column([
+                                  [sg.Text('Windows Username:'),
+                                   sg.InputText(
+                                       key='-win_user-', default_text='Domain\\Username'),
+                                   ],
+                                  [sg.Text('Password:'),
+                                   sg.InputText(
+                                       key='-win-password-',
+                                       password_char='*',
+                                   )
+                                   ],
+                              ], element_justification='right', expand_x=True, ),
                           ],
-                          [sg.Text('Windows Username (Username@Domain):'),
-                           sg.InputText(
-                               key='-win_user-', )
-                           ],
-                          [sg.Text('Password:'),
-                           sg.InputText(
-                               key='-win-password-',
-                               password_char='*',
-                           )
-                           ],
+
                       ], expand_x=True, )
              ],
             [sg.VSeparator(pad=(0, 15))],
@@ -207,18 +237,20 @@ class HTTPSMLLPConfigWindow:
             if self.event in (sg.WIN_CLOSED, 'Exit'):
                 break
             if self.values['-NSSM-folder-'] is not None and self.values['-NSSM-folder-'] != '':
-                self.window['-NSSM_TEXT-'].update(text_color='black')
-                if self.values['--certfile'] is not None and self.values['--certfile'] != '':
-                    if self.values['--keyfile'] is not None and self.values['--keyfile'] != '':
-                        self.checkservice()
+                if os.path.exists(str(self.values['-NSSM-folder-']) + '\\nssm.exe'):
+                    self.window['-NSSM_TEXT-'].update(text_color='black')
+                    if self.values['--certfile'] is not None and self.values['--certfile'] != '':
+                        if self.values['--keyfile'] is not None and self.values['--keyfile'] != '':
+                            self.checkservice()
+                else:
+                    self.window['-NSSM_FOLDER-'].update('nssm.exe not present in path')
             if self.values['--certfile'] is not None and self.values['--certfile'] != '':
                 self.window['cert'].update(text_color='black')
             if self.values['--keyfile'] is not None and self.values['--keyfile'] != '':
                 self.window['key'].update(text_color='black')
 
-
             if self.event == '-CreateWinService-':
-                #print("Configuration values", self.values)
+                # print("Configuration values", self.values)
 
                 # Validate the arguments
                 if not self.values['user_authentication']:
@@ -247,14 +279,13 @@ class HTTPSMLLPConfigWindow:
         # subprocess.call()
         try:
             output = subprocess.check_output(cmd, stderr=subprocess.STDOUT, shell=True).decode()
-            #print(output)
+            # print(output)
             self.window['-CreateWinService-'].update(disabled=True)
             self.window['-DeleteWinService-'].update(disabled=False)
         except subprocess.CalledProcessError as e:
             self.window['-CreateWinService-'].update(disabled=False)
             self.window['-DeleteWinService-'].update(disabled=True)
-            #print(e)
-
+            # print(e)
 
     def winservice(self):
 
